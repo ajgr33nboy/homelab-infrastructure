@@ -1,0 +1,183 @@
+# 🔐 Security Monitoring Implementation
+
+**Date Implemented:** January 20, 2026  
+**Components:** Fail2Ban, Prometheus, Grafana, Telegram Bot
+
+---
+
+## Overview
+
+Implemented automated intrusion prevention and monitoring system to protect production web services and track attack patterns in real-time.
+
+## Architecture
+```
+Internet → Cloudflare → ASUS Router (Port 80/443/25565)
+                              ↓
+                    Nginx Proxy Manager
+                              ↓
+                    Docker Services (Heimdall, etc.)
+                              ↓
+                    [Monitored by Fail2Ban]
+                              ↓
+                    Prometheus ← Custom Python Exporter
+                              ↓
+                    Grafana Dashboards
+                              ↓
+                    Telegram Alerts (Real-time)
+```
+
+## Components
+
+### Fail2Ban
+
+- **Version:** Latest (apt)
+- **Protected Services:**
+  - SSH (port 22) - Local network only
+  - Nginx Proxy Manager (ports 80, 443)
+- **Ban Duration:** 24 hours (86400 seconds)
+- **Max Retries:** 
+  - SSH: 3 attempts
+  - NPM: 10 attempts
+- **Detection Window:** 10 minutes (600 seconds)
+
+**Log Paths Monitored:**
+- `/var/lib/docker/volumes/nginx-proxy-manager_data/_data/logs/proxy-host-*_access.log`
+- `/var/lib/docker/volumes/nginx-proxy-manager_data/_data/logs/fallback_http_access.log`
+
+**Filter Rules:**
+- 404 Not Found (vulnerability scanning)
+- 403 Forbidden (unauthorized access attempts)
+- 401 Unauthorized (failed authentication)
+- 400 Bad Request (malformed requests)
+
+### Custom Fail2Ban Exporter
+
+- **Language:** Python 3
+- **Location:** `/opt/fail2ban-exporter/`
+- **Service:** systemd unit (fail2ban-exporter.service)
+- **Port:** 9191
+- **Metrics Exported:**
+  - `fail2ban_banned_ips{jail="..."}` - Currently banned IPs per jail
+  - `fail2ban_total_banned{jail="..."}` - Cumulative bans
+  - `fail2ban_total_failed{jail="..."}` - Failed attempt count
+
+### Prometheus
+
+- **Deployment:** Docker container (Portainer stack: monitoring)
+- **Port:** 9090
+- **Scrape Interval:** 15 seconds
+- **Data Retention:** Default (15 days)
+
+**Targets:**
+- prometheus:9090 (self-monitoring)
+- node-exporter:9100 (system metrics)
+- 172.17.0.1:9191 (fail2ban metrics)
+
+### Grafana
+
+- **Deployment:** Docker container (Portainer stack: monitoring)
+- **Port:** 3000
+- **Default Credentials:** admin/admin (changed on first login)
+
+**Dashboards:**
+1. Node Exporter Full (ID: 1860) - System metrics
+2. Fail2Ban Security Monitoring (Custom) - Security metrics
+
+### Telegram Bot
+
+- **Bot Name:** Homelab Security Bot
+- **Notifications:**
+  - IP banned events (with jail name, IP, failure count)
+  - IP unbanned events
+  - Jail started/stopped events
+
+## Attack Patterns Observed
+
+*To be updated after 7 days of monitoring*
+
+### Week 1 (Jan 20-27, 2026)
+
+- Total IPs banned: TBD
+- Most common attack type: TBD
+- Peak attack hours: TBD
+- Geographic distribution: TBD
+
+## Testing & Validation
+
+### Manual Testing Performed
+```bash
+# Test ban
+sudo fail2ban-client set nginx-proxy-manager banip 1.2.3.4
+
+# Verify Telegram notification received ✅
+# Verify metrics updated in Prometheus ✅
+# Verify Grafana dashboard updated ✅
+
+# Test unban
+sudo fail2ban-client set nginx-proxy-manager unbanip 1.2.3.4
+
+# Verify unban notification received ✅
+```
+
+## Configuration Files
+
+### Fail2Ban Jail Config
+
+**Location:** `/etc/fail2ban/jail.local`
+
+Key settings:
+- ignoreip: 127.0.0.1/8, ::1, 192.168.1.0/24
+- bantime: 86400
+- findtime: 600
+- maxretry: 5 (default)
+
+### Fail2Ban Filter
+
+**Location:** `/etc/fail2ban/filter.d/nginx-proxy-manager.conf`
+
+Detects HTTP error codes: 404, 403, 401, 400
+
+### Telegram Action
+
+**Location:** `/etc/fail2ban/action.d/telegram.conf`
+
+Configured with bot token and chat ID for instant mobile alerts.
+
+## Maintenance
+
+### Regular Tasks
+
+- **Daily:** Check Telegram for alerts
+- **Weekly:** Review banned IP list, check for patterns
+- **Monthly:** Analyze attack trends, update filters if needed
+
+### Useful Commands
+```bash
+# Check jail status
+sudo fail2ban-client status nginx-proxy-manager
+
+# View currently banned IPs
+sudo fail2ban-client get nginx-proxy-manager banip
+
+# View logs
+sudo tail -f /var/log/fail2ban.log
+
+# Manually unban IP
+sudo fail2ban-client set nginx-proxy-manager unbanip <IP>
+
+# Reload configuration
+sudo systemctl reload fail2ban
+```
+
+## Future Enhancements
+
+- [ ] Add GeoIP database for geographic visualization
+- [ ] Implement auto-reporting (weekly digest via Telegram)
+- [ ] Add honeypot detection
+- [ ] Correlate with Cloudflare analytics
+- [ ] Add fail2ban protection for other services (Plex, etc.)
+
+---
+
+**Implemented by:** Albert Weiner  
+**Repository:** github.com/yourusername/homelab-infrastructure
