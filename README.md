@@ -1,5 +1,5 @@
 markdown file explaining structure of my network - needs revision
-# 🏠 Homelab Infrastructure
+#  Homelab Infrastructure
 
 > **Production-grade home server environment with enterprise security practices**
 
@@ -24,7 +24,7 @@ markdown file explaining structure of my network - needs revision
 
 ---
 
-## 🎯 Overview
+##  Overview
 
 This repository documents my production homelab environment, designed with enterprise-grade security practices and modern infrastructure patterns. The setup emphasizes:
 
@@ -38,7 +38,7 @@ This repository documents my production homelab environment, designed with enter
 
 ---
 
-## 🗺️ Network Architecture
+##  Network Architecture
 
 ![Network Diagram](network-diagram.png)
 
@@ -71,7 +71,7 @@ Tailscale Mesh VPN (Secure Remote Access)
 
 ---
 
-## 🏗️ Infrastructure Components
+##  Infrastructure Components
 
 ### Network Gateway
 - **Router**: ASUS RT-AC3100 running OpenWRT
@@ -105,7 +105,7 @@ Tailscale Mesh VPN (Secure Remote Access)
 
 ---
 
-## 🔐 Security Implementation
+##  Security Implementation
 
 ### Network Security
 
@@ -138,7 +138,7 @@ Inter-VLAN: Production → IoT (blocked), IoT → Production (blocked)
 
 ---
 
-## 📦 Services & Applications
+##  Services & Applications
 
 All services run as Docker containers managed via **Docker Compose** and orchestrated through **Portainer**.
 
@@ -174,7 +174,7 @@ All services run as Docker containers managed via **Docker Compose** and orchest
 
 ---
 
-## 🌐 Remote Access
+##  Remote Access
 
 ### Tailscale VPN Mesh Network
 
@@ -200,7 +200,7 @@ All services run as Docker containers managed via **Docker Compose** and orchest
 
 ---
 
-## 📊 Monitoring & Observability
+##  Monitoring & Observability
 
 ### Current Implementation
 
@@ -231,7 +231,7 @@ Tier 3: External Backup (Planned)
 
 ---
 
-## 💻 Hardware Specifications
+##  Hardware Specifications
 
 ### Server Build Details
 
@@ -263,7 +263,7 @@ tailscale0: 100.x.x.x/32 (Mesh VPN)
 
 ---
 
-## 🚀 Future Enhancements
+##  Future Enhancements
 
 ### Short-Term (1-2 Weeks)
 - [ ] Implement Fail2Ban with email/Telegram alerts
@@ -285,7 +285,7 @@ tailscale0: 100.x.x.x/32 (Mesh VPN)
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 ### Configuration Examples
 
@@ -299,7 +299,7 @@ Docker Compose snippets, firewall rules, and network configs will be added to th
 
 ---
 
-## 📞 Contact
+##  Contact
 
 **Albert Weiner**  
 📧 ajgreenboy@gmail.com  
@@ -309,19 +309,12 @@ Docker Compose snippets, firewall rules, and network configs will be added to th
 
 ---
 
-## 📄 License
+##  License
 
 This project is documented under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🙏 Acknowledgments
-
-- **OpenWRT Community** for robust router firmware
-- **Tailscale** for simplifying secure remote access
-- **Cloudflare** for DNS and Zero Trust services
-- **LinuxServer.io** for excellent Docker container images
-- **r/homelab** community for inspiration and troubleshooting help
 
 ---
 
