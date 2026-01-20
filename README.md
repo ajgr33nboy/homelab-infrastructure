@@ -261,6 +261,39 @@ tailscale0: 100.x.x.x/32 (Mesh VPN)
 - **Ports**: 4x Gigabit LAN + 1x Gigabit WAN
 - **Firmware**: OpenWRT 23.05
 
+##  Remote Access
+
+### Secure Dashboard Access
+- **Grafana:** https://grafana.unfunky.xyz
+- **Authentication:** Cloudflare Zero Trust with GitHub OAuth
+- **SSL/TLS:** Let's Encrypt certificates via Nginx Proxy Manager
+- **Protection:** Multi-layer security (Cloudflare + NPM + Grafana auth)
+
+##  Monitoring Dashboards
+
+### Available Dashboards
+1. **System Overview** (Node Exporter Full)
+   - CPU, RAM, disk, network for entire host
+   - Real-time and historical metrics
+   
+2. **Docker Containers** (cAdvisor)
+   - Per-container resource usage (CPU, RAM, network, disk)
+   - Container count and health status
+   - 12+ services monitored
+   
+3. **Security Monitoring** (Fail2Ban + GeoIP)
+   - Currently banned IPs
+   - Failed login attempts over time
+   - Geographic distribution of attacks (world map)
+   - Real-time security metrics
+
+### Metrics Collection
+- **Prometheus:** 15-second scrape interval
+- **Exporters:**
+  - Node Exporter (system metrics)
+  - cAdvisor (container metrics)
+  - Custom Fail2Ban exporter (security metrics)
+  - Custom GeoIP exporter (attack geography)
 ---
 
 ##  Future Enhancements
