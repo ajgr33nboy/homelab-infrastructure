@@ -180,4 +180,4 @@ sudo systemctl reload fail2ban
 ---
 
 **Implemented by:** Albert Weiner  
-**Repository:** github.com/yourusername/homelab-infrastructure
+**Repository:** github.com/ajgreenboy/homelab-infrastructure
