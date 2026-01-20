@@ -12,15 +12,15 @@ markdown file explaining structure of my network - needs revision
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Network Architecture](#network-architecture)
-- [Infrastructure Components](#infrastructure-components)
-- [Security Implementation](#security-implementation)
-- [Services & Applications](#services--applications)
-- [Remote Access](#remote-access)
-- [Monitoring & Observability](#monitoring--observability)
-- [Hardware Specifications](#hardware-specifications)
-- [Future Enhancements](#future-enhancements)
+- [Overview](#-overview)
+- [Network Architecture](#️-network-architecture)
+- [Infrastructure Components](#️-infrastructure-components)
+- [Security Implementation](#-security-implementation)
+- [Services & Applications](#-services--applications)
+- [Remote Access](#-remote-access)
+- [Monitoring & Observability](#-monitoring--observability)
+- [Hardware Specifications](#-hardware-specifications)
+- [Future Enhancements](#-future-enhancements)
 
 ---
 
