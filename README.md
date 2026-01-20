@@ -1,4 +1,4 @@
-diagram explaining structure of my network - needs revision
+markdown file explaining structure of my network - needs revision
 # 🏠 Homelab Infrastructure
 
 > **Production-grade home server environment with enterprise security practices**
